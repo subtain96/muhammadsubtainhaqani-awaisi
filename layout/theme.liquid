@@ -26,6 +26,10 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {%- comment -%} Custom Sections CSS {%- endcomment -%}
+    {{ 'custom-banner.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-product-grid.css' | asset_url | stylesheet_tag }}
+    {{ 'product-popup.css' | asset_url | stylesheet_tag }}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
@@ -123,5 +127,8 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    {%- comment -%} Custom Sections JavaScript {%- endcomment -%}
+    <script src="{{ 'custom-scripts.js' | asset_url }}" defer></script>
   </body>
 </html>
