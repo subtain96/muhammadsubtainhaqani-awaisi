@@ -1,0 +1,102 @@
+{% comment %}
+  Custom Product Grid Section
+  Features:
+  - Displays 6 products in a responsive grid
+  - Quick view functionality with popup
+  - Products selectable from theme customizer
+  - Fully responsive (3 cols -> 2 cols -> 1 col)
+{% endcomment %}
+
+<div class="custom-product-grid">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <h2 class="grid-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    
+    <div class="product-grid">
+      {% for block in section.blocks %}
+        {% if block.settings.product != blank %}
+          {% assign product = block.settings.product %}
+          <div class="product-card" data-product-id="{{ product.id }}" {{ block.shopify_attributes }}>
+            <div class="product-image-wrapper">
+              {% if product.featured_image %}
+                <img 
+                  src="{{ product.featured_image | img_url: '400x400' }}" 
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                >
+              {% else %}
+                <div class="product-placeholder">
+                  <svg viewBox="0 0 24 24" width="48" height="48">
+                    <path fill="#ccc" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                  </svg>
+                </div>
+              {% endif %}
+              
+              <button 
+                class="product-quick-view" 
+                data-product-handle="{{ product.handle }}"
+                aria-label="Quick view {{ product.title | escape }}"
+                type="button">
+                <svg class="icon-eye" viewBox="0 0 24 24" width="24" height="24">
+                  <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                  <path fill="none" stroke="currentColor" stroke-width="2" d="M12 5C7 5 2.73 8.11 1 12.5 2.73 16.89 7 20 12 20s9.27-3.11 11-7.5C21.27 8.11 17 5 12 5z"></path>
+                </svg>
+              </button>
+            </div>
+            
+            <div class="product-info">
+              <h3 class="product-title">{{ product.title }}</h3>
+              <p class="product-price">{{ product.price | money }}</p>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Include Product Popup Snippet -->
+{% render 'product-popup' %}
+
+{% schema %}
+{
+  "name": "Custom Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Featured Products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Grid",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
