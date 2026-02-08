@@ -1,0 +1,55 @@
+{% comment %}
+  Product Popup Snippet
+  Modal popup for quick product view
+  Features:
+  - Product image, title, price, description
+  - Dynamic variant selection
+  - Functional add to cart
+{% endcomment %}
+
+<div class="product-popup-overlay" id="productPopup" role="dialog" aria-modal="true" aria-labelledby="popupProductTitle">
+  <div class="product-popup-container">
+    <button class="popup-close" aria-label="Close popup" type="button">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" fill="none"/>
+      </svg>
+    </button>
+    
+    <div class="popup-content">
+      <div class="popup-image">
+        <img id="popupProductImage" src="" alt="" loading="lazy">
+      </div>
+      
+      <div class="popup-details">
+        <h2 id="popupProductTitle"></h2>
+        <p class="popup-price" id="popupProductPrice"></p>
+        <div class="popup-description" id="popupProductDescription"></div>
+        
+        <form id="popupAddToCartForm" class="popup-form">
+          <div id="popupVariants" class="popup-variants"></div>
+          
+          <button type="submit" class="btn-add-to-cart">
+            <span class="btn-text">ADD TO CART</span>
+            <span class="btn-loading" style="display: none;">
+              <svg class="spinner" viewBox="0 0 24 24" width="20" height="20">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" opacity="0.25"></circle>
+                <path fill="currentColor" d="M12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8V2z"></path>
+              </svg>
+              Adding...
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Spinner animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
+</style>
